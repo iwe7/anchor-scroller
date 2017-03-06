@@ -139,7 +139,14 @@ export default class AnchorScroller {
     // Only run if the current scroll position
     // is not equal to the anchors' position
     event.preventDefault();
-    if (window.scrollY !== anchor.offsetTop) {
+    if(
+      window.scrollY !== anchor.offsetTop &&
+      navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    ) {
+      // Firefox `.offsetTop` is 13 pixels less
+      this.scroll(anchor.offsetTop + 13);
+    }
+    else if (window.scrollY !== anchor.offsetTop) {
       this.scroll(anchor.offsetTop);
     }
   }
